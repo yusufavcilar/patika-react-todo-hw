@@ -1,39 +1,32 @@
-import React from 'react'
-import styles from './index.module.css';
+import React from "react";
+import styles from "./index.module.css";
 
-const TodoBody = () => {
+const TodoBody = ({ todos , statusHandler }) => {
+const statusOnChange = (todo)=> {
+  statusHandler(todo);
+
+}
+
   return (
     <section className={styles.main}>
-            <input className={styles["toggle-all"]} type="checkbox"/>
-            <label htmlFor="toggle-all">
-                Mark all as complete
-            </label>
-    
-            <ul className={styles["todo-list"]}>
-                <li className={styles.completed}>
-                    <div className={styles.view}>
-                        <input className={styles.toggle} type="checkbox"/>
-                        <label>Learn JavaScript</label>
-                        <button className={styles.destroy}></button>
-                    </div>
-                </li>
-                <li>
-                    <div className="view">
-                        <input className={styles.toggle} type="checkbox"/>
-                        <label>Learn React</label>
-                        <button className={styles.destroy}></button>
-                    </div>
-                </li>
-                <li>
-                    <div className="view">
-                        <input className={styles.toggle} type="checkbox"/>
-                        <label>Have a life!</label>
-                        <button className={styles.destroy}></button>
-                    </div>
-                </li>
-            </ul>
-        </section>
-  )
-}
+      <input className={styles["toggle-all"]} type="checkbox" />
+      <label htmlFor="toggle-all">Mark all as complete</label>
+
+      <ul className={styles["todo-list"]}>
+        {todos.map((todo) => {
+          return (
+            <li key={todo.id} className={todo.isCompleted ? styles.completed : null}>
+              <div className="view">
+                <input className={styles.toggle} type="checkbox" onChange={()=> statusOnChange(todo)} />
+                <label>{todo.name}</label>
+                <button className={styles.destroy}></button>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+};
 
 export default TodoBody;
